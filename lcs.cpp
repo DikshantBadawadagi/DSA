@@ -1,18 +1,49 @@
-class Solution {
-    private:
-    int f(int ind1,int ind2,string &s1,string &s2,vector<vector<int>>&dp){
-        if(ind1 >= s1.length() || ind2 >= s2.length()){
-            return 0;
-        }
-        if(dp[ind1][ind2] != -1)return dp[ind1][ind2];
-        if(s1[ind1] == s2[ind2]){
-            return dp[ind1][ind2] = 1 + f(ind1 +1,ind2 +1,s1,s2,dp);
-        }
-        else return dp[ind1][ind2] = max(f(ind1 +1,ind2,s1,s2,dp),f(ind1,ind2+1,s1,s2,dp));
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n), b(m);
+    for(int i = 0; i < n; i++) {
+        cin >> a[i];
     }
-public:
-    int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>>dp(text1.length(),vector<int>(text2.length(),-1));
-        return f(0,0,text1,text2,dp);
+    for(int i = 0; i < m; i++) {
+        cin >> b[i];
     }
-};
+
+    // Step 1: Build DP table
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    for(int i = n - 1; i >= 0; i--) {
+        for(int j = m - 1; j >= 0; j--) {
+            if(a[i] == b[j]) {
+                dp[i][j] = 1 + dp[i + 1][j + 1];
+            } else {
+                dp[i][j] = max(dp[i + 1][j], dp[i][j + 1]);
+            }
+        }
+    }
+
+    cout << dp[0][0] << endl;
+
+    // Step 3: Recover and print the LCS
+    int i = 0, j = 0;
+    vector<int> lcs;
+    while(i < n && j < m) {
+        if(a[i] == b[j]) {
+            lcs.push_back(a[i]);
+            i++;
+            j++;
+        } else if(dp[i + 1][j] >= dp[i][j + 1]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+
+    for(int x : lcs) {
+        cout << x << " ";
+    }
+    cout << endl;
+}
