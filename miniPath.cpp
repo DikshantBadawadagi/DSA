@@ -26,13 +26,12 @@ int main() {
         curr[n-1] = grid[i][n-1] + next[n-1];
         for(int j = n - 2; j >= 0; j--) {
             char ch = grid[i][j];
-            char downFirst = next[j][0];
-            char rightFirst = curr[j+1][0];
+            char d = next[j][0];
+            char r = curr[j+1][0];
 
-            // Greedy check: only compare full strings if first characters equal
-            if (downFirst < rightFirst) {
+            if (d < r) {
                 curr[j] = ch + next[j];
-            } else if (downFirst > rightFirst) {
+            } else if (d > r) {
                 curr[j] = ch + curr[j+1];
             } else {
                 string down = ch + next[j];
