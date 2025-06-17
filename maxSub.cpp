@@ -1,13 +1,23 @@
-class Solution {
-public:
-    int maxSubArray(vector<int>& nums) {
-        int sum=0,ans=-1001;
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
 
-        for(auto num : nums){
-            sum+=num;
-            ans = max(ans,sum);
-            if(sum < 0)sum =0;
-        }
-        return ans;
+int main() {
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
-};
+    long long sum=arr[0];
+    long long max_sum=arr[0];
+    for(int i = 1; i < n; i++) {
+        if(sum < 0) {
+            sum = 0;
+        }
+        sum += arr[i];
+        max_sum = max(max_sum, sum);
+    }
+    cout << max_sum << endl;
+    return 0;
+}
