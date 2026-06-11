@@ -3,20 +3,22 @@
 using namespace std;
 
 int main() {
+
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     long long n;
     cin>>n;
 
-    long long sum=0;
 
-    long long ans = n*(n+1)/2;
-
-    for(int i=0;i<n-1;i++){
-        int u;
-        cin>>u;
-        sum+=u;
+    while(n!=1){
+        cout<<n<<" ";
+        if(n%2 == 0){
+            n>>=1;
+        }
+        else{
+            n = 3*n+1;
+        }
     }
-    cout<<ans-sum;
+    cout<<1;
 }
